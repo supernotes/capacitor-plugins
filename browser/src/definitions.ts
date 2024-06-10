@@ -105,6 +105,18 @@ export interface OpenOptions {
    * @since 4.0.0
    */
   height?: number;
+
+  /**
+   * iOS only: Use web authentication session rather than a browser.
+   * This is useful for Single Sign On (SSO) and allows cookies and
+   * other browsing data to be shared with Safari.
+   * Defaults to false.
+   *
+   * Ignored on other platforms.
+   *
+   * @since 4.0.0
+   */
+  useWebAuthSession?: boolean;
 }
 
 /**

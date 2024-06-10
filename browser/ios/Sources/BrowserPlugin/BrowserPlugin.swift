@@ -3,12 +3,13 @@ import Capacitor
 
 @objc(CAPBrowserPlugin)
 public class CAPBrowserPlugin: CAPPlugin, CAPBridgedPlugin {
-    public let identifier = "CAPBrowserPlugin" 
-    public let jsName = "Browser" 
+    public let identifier = "CAPBrowserPlugin"
+    public let jsName = "Browser"
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "open", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "close", returnType: CAPPluginReturnPromise),
-    ] 
+        CAPPluginMethod(name: "startWebAuthSession", returnType: CAPPluginReturnPromise)
+    ]
     private let implementation = Browser()
 
     @objc func open(_ call: CAPPluginCall) {
@@ -55,6 +56,32 @@ public class CAPBrowserPlugin: CAPPlugin, CAPBridgedPlugin {
                 }
             } else {
                 call.reject("No active window to close!")
+            }
+        }
+    }
+    
+    @objc func startWebAuthSession(_ call: CAPPluginCall) {
+        guard let urlString = call.getString("url"), let url = URL(string: urlString),
+              let callbackURLScheme = call.getString("callbackURLScheme") else {
+            call.reject("Must provide a valid URL and callback URL scheme to start web auth session")
+            return
+        }
+        let useWebAuthSession = call.getBool("useWebAuthSession") ?? false
+        
+        guard implementation.prepareWebAuthSession(for: url, callbackURLScheme: callbackURLScheme, useWebAuthSession: useWebAuthSession) else {
+            call.reject("Unable to prepare web authentication session")
+            return
+        }
+        
+        implementation.browserEventDidOccur = { [weak self] (event) in
+            self?.notifyListeners(event.listenerEvent, data: nil)
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            if self?.implementation.startWebAuthSession() == true {
+                call.resolve()
+            } else {
+                call.reject("Failed to start web authentication session")
             }
         }
     }
