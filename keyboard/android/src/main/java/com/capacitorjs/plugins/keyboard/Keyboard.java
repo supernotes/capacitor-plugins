@@ -75,7 +75,7 @@ public class Keyboard {
                     }
 
                     if (showingKeyboard) {
-                        keyboardEventListener.onKeyboardEvent(EVENT_KB_WILL_SHOW, Math.round(imeHeight / density));
+                        keyboardEventListener.onKeyboardEvent(EVENT_KB_WILL_SHOW, Math.round((imeHeight - getNavigationBarHeight()) / density));
                     } else {
                         keyboardEventListener.onKeyboardEvent(EVENT_KB_WILL_HIDE, 0);
                     }
@@ -92,7 +92,7 @@ public class Keyboard {
                     final float density = dm.density;
 
                     if (showingKeyboard) {
-                        keyboardEventListener.onKeyboardEvent(EVENT_KB_DID_SHOW, Math.round(imeHeight / density));
+                        keyboardEventListener.onKeyboardEvent(EVENT_KB_DID_SHOW, Math.round((imeHeight - getNavigationBarHeight()) / density));
                     } else {
                         keyboardEventListener.onKeyboardEvent(EVENT_KB_DID_HIDE, 0);
                     }
@@ -131,7 +131,15 @@ public class Keyboard {
     private int computeUsableHeight() {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
-        return isOverlays() ? r.bottom : r.height();
+        return isOverlays() ? r.bottom : r.height() - getNavigationBarHeight();
+    }
+
+    private int getNavigationBarHeight() {
+        int resourceId = activity.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return activity.getResources().getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 
     @SuppressWarnings("deprecation")
