@@ -1,6 +1,6 @@
 {
-  "name": "@capacitor/keyboard",
-  "version": "7.0.1",
+  "name": "@supernotes/capacitor-keyboard",
+  "version": "6.0.2",
   "description": "The Keyboard API provides keyboard display and visibility control, along with event tracking when the keyboard shows and hides.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -13,13 +13,13 @@
     "ios/Sources",
     "ios/Tests",
     "Package.swift",
-    "CapacitorKeyboard.podspec"
+    "SupernotesCapacitorKeyboard.podspec"
   ],
   "author": "Ionic <hi@ionicframework.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ionic-team/capacitor-plugins.git"
+    "url": "https://github.com/supernotes/capacitor-plugins"
   },
   "bugs": {
     "url": "https://github.com/ionic-team/capacitor-plugins/issues"
@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "verify:ios": "xcodebuild build -scheme CapacitorKeyboard -destination generic/platform=iOS",
+    "verify:ios": "xcodebuild build -scheme SupernotesCapacitorKeyboard -sdk iphonesimulator17.0 -destination 'OS=17.0,name=iPhone 15'",
     "verify:android": "cd android && ./gradlew clean build test && cd ..",
     "verify:web": "npm run build",
     "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
@@ -44,7 +44,7 @@
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build",
-    "publish:cocoapod": "pod trunk push ./CapacitorKeyboard.podspec --allow-warnings"
+    "publish:cocoapod": "pod trunk push ./SupernotesCapacitorKeyboard.podspec --allow-warnings"
   },
   "devDependencies": {
     "@capacitor/android": "next",

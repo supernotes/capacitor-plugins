@@ -4,7 +4,7 @@ export default {
     {
       file: 'dist/plugin.js',
       format: 'iife',
-      name: 'capacitorClipboard',
+      name: 'supernotesCapacitorClipboard',
       globals: {
         '@capacitor/core': 'capacitorExports',
       },
