@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "CapacitorClipboard",
+    name: "SupernotesCapacitorClipboard",
     platforms: [.iOS(.v13)],
     products: [
         .library(
-            name: "CapacitorClipboard",
+            name: "SupernotesCapacitorClipboard",
             targets: ["ClipboardPlugin"])
     ],
     dependencies: [

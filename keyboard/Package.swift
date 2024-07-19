@@ -3,11 +3,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "CapacitorKeyboard",
+    name: "SupernotesCapacitorKeyboard",
     platforms: [.iOS(.v13)],
     products: [
         .library(
-            name: "CapacitorKeyboard",
+            name: "SupernotesCapacitorKeyboard",
             targets: ["KeyboardPlugin"])
     ],
     dependencies: [
